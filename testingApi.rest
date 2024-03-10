@@ -1,0 +1,11 @@
+###post request
+POST http://localhost:4001/url
+Content-Type: application/json
+
+{
+    "url":""
+}
+
+###Get request
+GET http://localhost:4001/url/analytics/_PrX2A9Jm
+Content-Type: application/json

@@ -9,7 +9,7 @@ async function handlePostRequest(req, res) {
         OriginalURL: body,
         visitHistory: []
     });
-    return res.status(201).json({ NewShortId, body });
+    return res.status(201).json({ NewShortId});
 }
 
 async function handleGetRequest(req,res){

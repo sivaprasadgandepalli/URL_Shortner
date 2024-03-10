@@ -2,6 +2,7 @@ const express = require('express');
 const urlModel = require("./models/urlModel")
 const app = express();
 const Port = 4001;
+const cors=require("cors");
 const { connect } = require("./database/connection");
 const router = require("./routers/urlRouter")
 
@@ -11,7 +12,7 @@ connect().then(() => console.log('Database connected'))
 
 //middleware
 app.use(express.json());
-
+app.use(cors());
 //routes
 app.use("/url", router);
 app.get("/:id", handleGetRequest)

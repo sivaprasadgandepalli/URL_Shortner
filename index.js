@@ -1,5 +1,5 @@
 const express = require('express');
-const urlModel=require("./models/urlModel")
+const urlModel = require("./models/urlModel")
 const app = express();
 const Port = 4001;
 const { connect } = require("./database/connection");
@@ -14,27 +14,35 @@ app.use(express.json());
 
 //routes
 app.use("/url", router);
-app.get("/:id",handleGetRequest)
+app.get("/:id", handleGetRequest)
 
 async function handleGetRequest(req, res) {
     const id = req.params.id;
-    const result = await urlModel.findOne({ ShortId: id });
-    if (!result) {
-        return res.json({ "error": "No Url found" });
-    }
-    urlModel.findOneAndUpdate(
-        { id },
-        {
-            $push:
+    try {
+        const result = await urlModel.findOne({ ShortId: id });
+        if (!result) {
+            return res.json({ "error": "No Url found" });
+        }
+        
+        await urlModel.findOneAndUpdate(
+            { ShortId: id },
             {
-                visitHistory: {
-                    timestamp: Date.now()
+                $push:
+                {
+                    visitHistory: {
+                        timestamp: Date.now()
+                    }
                 }
             }
-        }
-    );
-    return res.redirect(result.OriginalURL);
+        );
+
+        return res.redirect(result.OriginalURL);
+    } catch (error) {
+        console.error("Error updating visit history:", error);
+        return res.status(500).json({ "error": "Internal Server Error" });
+    }
 }
+
 
 //listening to the port
 app.listen(Port, () => {

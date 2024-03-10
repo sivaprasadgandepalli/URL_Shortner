@@ -9,3 +9,7 @@ Content-Type: application/json
 ###Get request
 GET http://localhost:4001/url/analytics/_PrX2A9Jm
 Content-Type: application/json
+
+###get request
+GET http://localhost:4001/_PrX2A9Jm
+Content-Type: application/json

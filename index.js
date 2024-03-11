@@ -2,7 +2,9 @@ const express = require('express');
 const urlModel = require("./models/urlModel")
 const app = express();
 const Port = 4001;
-const cors=require("cors");
+const path = require("path")
+const cors = require("cors");
+const staticRouter=require("./routers/staticRouter");
 const { connect } = require("./database/connection");
 const router = require("./routers/urlRouter")
 
@@ -10,13 +12,16 @@ const router = require("./routers/urlRouter")
 connect().then(() => console.log('Database connected'))
     .catch(err => console.error('Error connecting to database:', err));
 
+app.set("view engine", "ejs");
+app.set("views", path.resolve("./views"))
 //middleware
 app.use(express.json());
+app.use(express.urlencoded({extended:false}))
 app.use(cors());
 //routes
 app.use("/url", router);
-app.get("/:id", handleGetRequest)
-
+app.use("/",staticRouter);
+app.get("/getId/:id", handleGetRequest)
 async function handleGetRequest(req, res) {
     const id = req.params.id;
     try {
@@ -24,7 +29,7 @@ async function handleGetRequest(req, res) {
         if (!result) {
             return res.json({ "error": "No Url found" });
         }
-        
+
         await urlModel.findOneAndUpdate(
             { ShortId: id },
             {

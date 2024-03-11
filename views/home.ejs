@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortner</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100%;
+            height: 100vh;
+            background: #2F539B;
+
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: start;
+        }
+
+        .container {
+            margin-top: 2rem;
+            width: fit-content;
+            background-color: rgb(234, 238, 244);
+
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .container>h4 {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-top: .5rem;
+            margin-bottom: 10px;
+        }
+
+        .input {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-direction: column;
+
+        }
+
+        .input input {
+            padding: .4rem 1rem;
+            border: none;
+            position: relative;
+        }
+
+        .input-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .input input[type="text"]:focus {
+            outline: none;
+        }
+
+        .input .btn {
+            background-color: #282828;
+            color: white;
+            cursor: pointer;
+            padding: .4rem 1rem;
+            border: none;
+            position: relative;
+        }
+
+        .input p {
+
+            margin-block: .3rem;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        li {
+            list-style: none;
+            margin-block: .5rem;
+            text-align: left;
+        }
+
+        table,
+        tr,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+
+        }
+
+        td,
+        th {
+            padding: 10px;
+        }
+
+        td:nth-child(4),
+        td:nth-child(1) {
+            text-align: center;
+        }
+
+        th:nth-child(3) {
+            text-align: left;
+        }
+
+        h5 {
+            margin-right: auto;
+            font-size: 1.3rem;
+            margin-block: .5rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h4>Url Shortner</h4>
+        <div class="input">
+            <form class="input-group" method="POST" action="/url">
+                <input type="text" name="url" placeholder="https://example.com">
+                <button type="submit" class="btn">Generate</button>
+            </form>
+        </div>
+
+
+        <h5>Active URLs</h5>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Sr.No</th>
+                    <th>ShortId</th>
+                    <th>OriginalUrl</th>
+                    <th>Total Visits</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <% urls.forEach((url,ind)=> { %>
+                    <tr>
+                        <td>
+                            <%= ind %>
+                        </td>
+                        <td>
+                            <%= url.ShortId %>
+                        </td>
+                        <td>
+                            <%= url.OriginalURL %>
+                        </td>
+                        <td>
+                            <%= url.visitHistory.length %>
+                        </td>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+
+
+</html>
